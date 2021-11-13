@@ -278,7 +278,6 @@ for (j=0;j<num;j++)
 // tratamiento de las caras
 caras.resize(2*(num_aux-1)*num);
 
-if(tapa==10){
 	for (j=0;j<num;j++)
 		{for (i=0;i<num_aux-1;i++){
 			cara_aux._0=i+((j+1)%num)*num_aux;
@@ -292,23 +291,8 @@ if(tapa==10){
 			caras.push_back(cara_aux);
 		}
 	}
-}else{
-	for (j=0;j<num;j++)
-	  {for (i=0;i<num_aux-1;i++)
-	     {cara_aux._0=i+((j+1)%num)*num_aux;
-	      cara_aux._1=i+1+((j+1)%num)*num_aux;
-	      cara_aux._2=i+1+j*num_aux;
-	      caras.push_back(cara_aux);
 
-	      cara_aux._0=i+1+j*num_aux;
-	      cara_aux._1=i+j*num_aux;
-	      cara_aux._2=i+((j+1)%num)*num_aux;
-	      caras.push_back(cara_aux);
-	     }
-	  }
-}
-
-	if(tapa==10){ // Cilindro
+	if(tapa==2){ // Cilindro
 		// Tapa Superior
 		if(fabs(perfil[0].x)>0.0){
 			vertice_aux.x=0.0; vertice_aux.y=perfil[0].y /*Nice*/; vertice_aux.z=0.0;
@@ -334,7 +318,7 @@ if(tapa==10){
 				caras.push_back(cara_aux);
 			}
 		}
-	}else if(tapa==12){ // Esfera
+	}else if(tapa==0){ // Esfera
 		// Tapa inferior
 		if(fabs(perfil[0].x)>0.0){
 			vertice_aux.x=0.0; vertice_aux.y=hesf /*Nice*/; vertice_aux.z=0.0;
@@ -359,12 +343,6 @@ if(tapa==10){
 				cara_aux._2=(i+perfil.size()-1)%(vertices.size()-1); // (i+perfil.size())%(vertices.size()-1)
 				caras.push_back(cara_aux);
 			}
-
-			// Introduzco la cara con el primer vértice y el último del primer círculo superior y el (0.0, 1.0, 0.0).
-			cara_aux._0=8+9*15;
-			cara_aux._1=8;
-			cara_aux._2=vertices.size()-1;
-			caras.push_back(cara_aux);
 		}
 	}else{ // Caso sin tapas
 		// Nada
@@ -381,138 +359,6 @@ if(tapa==10){
   }*/
 }
 
-//************************************************************************
-// objeto articulado: tanque
-//************************************************************************
-
-_chasis::_chasis()
-{
-// perfil para un cilindro
-vector<_vertex3f> perfil;
-_vertex3f aux;
-aux.x=0.107;aux.y=-0.5;aux.z=0.0;
-perfil.push_back(aux);
-aux.x=0.107;aux.y=0.5;aux.z=0.0;
-perfil.push_back(aux);
-rodamiento.parametros(perfil,12,1,0);
-altura=0.22;
-};
-
-void _chasis::draw(_modo modo, float r1, float g1, float b1, float r2, float g2, float b2, float grosor)
-{
-glPushMatrix();
-glScalef(1.0,0.22,0.95);
-base.draw(modo, r1, g1, b1, r2, g2, b2, grosor);
-glPopMatrix();
-
-glPushMatrix();
-glRotatef(90.0,1,0,0);
-rodamiento.draw(modo, r1, g1, b1, r2, g2, b2, grosor);
-glPopMatrix();
-
-glPushMatrix();
-glTranslatef(-0.25,0.0,0.0);
-glRotatef(90.0,1,0,0);
-rodamiento.draw(modo, r1, g1, b1, r2, g2, b2, grosor);
-glPopMatrix();
-
-glPushMatrix();
-glTranslatef(-0.5,0.0,0.0);
-glRotatef(90.0,1,0,0);
-rodamiento.draw(modo, r1, g1, b1, r2, g2, b2, grosor);
-glPopMatrix();
-
-glPushMatrix();
-glTranslatef(0.25,0.0,0.0);
-glRotatef(90.0,1,0,0);
-rodamiento.draw(modo, r1, g1, b1, r2, g2, b2, grosor);
-glPopMatrix();
-
-glPushMatrix();
-glTranslatef(0.5,0.0,0.0);
-glRotatef(90.0,1,0,0);
-rodamiento.draw(modo, r1, g1, b1, r2, g2, b2, grosor);
-glPopMatrix();
-}
-
-//************************************************************************
-
-_torreta::_torreta()
-{
-altura=0.18;
-anchura=0.65;
-};
-
-void _torreta::draw(_modo modo, float r1, float g1, float b1, float r2, float g2, float b2, float grosor)
-{
-glPushMatrix();
-glScalef(0.65,0.18,0.6);
-base.draw(modo, r1, g1, b1, r2, g2, b2, grosor);
-glPopMatrix();
-
-glPushMatrix();
-glTranslatef(-0.325,0,0);
-glRotatef(90.0,0,0,1);
-glScalef(0.18,0.16,0.6);
-parte_trasera.draw(modo, r1, g1, b1, r2, g2, b2, grosor);
-glPopMatrix();
-}
-
-//************************************************************************
-
-_tubo::_tubo()
-{
-// perfil para un cilindro
-vector<_vertex3f> perfil;
-_vertex3f aux;
-aux.x=0.04;aux.y=-0.4;aux.z=0.0;
-perfil.push_back(aux);
-aux.x=0.04;aux.y=0.4;aux.z=0.0;
-perfil.push_back(aux);
-tubo_abierto.parametros(perfil,12,0,0);
-};
-
-void _tubo::draw(_modo modo, float r1, float g1, float b1, float r2, float g2, float b2, float grosor)
-{
-
-glPushMatrix();
-glTranslatef(0.4,0,0);
-glRotatef(90.0,0,0,1);
-tubo_abierto.draw(modo, r1, g1, b1, r2, g2, b2, grosor);
-glPopMatrix();
-}
-
-
-//************************************************************************
-
-_tanque::_tanque()
-{
-giro_tubo=2.0;
-giro_torreta=0.0;
-giro_tubo_min=-9;
-giro_tubo_max=20;
-};
-
-void _tanque::draw(_modo modo, float r1, float g1, float b1, float r2, float g2, float b2, float grosor)
-{
-glPushMatrix();
-		chasis.draw(modo, r1, g1, b1, r2, g2, b2, grosor);
-
-		glRotatef(giro_torreta,0,1,0);
-	glPushMatrix();
-		glTranslatef(0.0,(chasis.altura+torreta.altura)/2.0,0.0);
-		torreta.draw(modo, r1, g1, b1, r2, g2, b2, grosor);
-	glPopMatrix();
-
-	glPushMatrix();
-		glTranslatef(torreta.anchura/2.0,(chasis.altura+torreta.altura)/2.0,0.0);
-		glRotatef(giro_tubo,0,0,1);
-		tubo.draw(modo, r1, g1, b1, r2, g2, b2, grosor);
-	glPopMatrix();
-glPopMatrix();
-
-};
-
 /****************************************************************************/
 // Práctica 2
 /****************************************************************************/
@@ -522,6 +368,7 @@ _cilindro::_cilindro(){
 	_rotacion();
 }
 
+// Práctica 2
 void _cilindro::dibujarCilindro(int tapas){
 	vector<_vertex3f> perfil_cilindro;
 	_vertex3f aux_cilindro;
@@ -538,6 +385,7 @@ void _cilindro::dibujarCilindro(int tapas){
 	parametros(perfil_cilindro, 16, tapas, 0);
 }
 
+// Práctica 3
 void _cilindro::dibujarCilindroPerfil(vector<_vertex3f> perfil_cilindro, int rotaciones, int tapas){
 	parametros(perfil_cilindro, rotaciones, tapas, 0);
 }
@@ -547,6 +395,7 @@ _esfera::_esfera(){
 	_rotacion();
 }
 
+// Práctica 2
 void _esfera::dibujarEsfera(int tapas){
 	vector<_vertex3f> perfil_esfera;
 	_vertex3f aux_esfera;
@@ -565,6 +414,7 @@ void _esfera::dibujarEsfera(int tapas){
 	parametros(perfil_esfera, 16, tapas, sin(M_PI*0/10-M_PI/2.0));
 }
 
+// Práctica 3
 void _esfera::dibujarEsferaPerfil(vector<_vertex3f> perfi_esfera, int rotaciones, int tapas, float hesf){
 	parametros(perfi_esfera, rotaciones, tapas, hesf);
 }
@@ -584,7 +434,7 @@ _chistera::_chistera(){
 	perfilCopa.push_back(auxCopa);
 	auxCopa.x=0.35;auxCopa.y=0.0;auxCopa.z=0.0;
 	perfilCopa.push_back(auxCopa);
-	copa.dibujarCilindroPerfil(perfilCopa,16,10);
+	copa.dibujarCilindroPerfil(perfilCopa,16,2);
 
 	// Perfil para la base
 	vector<_vertex3f> perfilBase;
@@ -593,7 +443,7 @@ _chistera::_chistera(){
 	perfilBase.push_back(auxBase);
 	auxBase.x=0.5;auxBase.y=0.0;auxBase.z=0.0;
 	perfilBase.push_back(auxBase);
-	base.dibujarCilindroPerfil(perfilBase,16,10);
+	base.dibujarCilindroPerfil(perfilBase,16,2);
 }
 
 void _chistera::draw(_modo modo, float r1, float g1, float b1, float r2, float g2, float b2, float grosor){
@@ -625,7 +475,7 @@ _cabeza::_cabeza(){
 			auxCabeza.z=0.0;
 			perfilCabeza.push_back(auxCabeza);
 	}
-	cab.dibujarEsferaPerfil(perfilCabeza, 16, 12, sin(M_PI*0/10-M_PI/2.0)/2);
+	cab.dibujarEsferaPerfil(perfilCabeza, 16, 0, sin(M_PI*0/10-M_PI/2.0)/2);
 }
 
 void _cabeza::draw(_modo modo, float r1, float g1, float b1, float r2, float g2, float b2, float grosor){
@@ -644,7 +494,7 @@ _cuerpo::_cuerpo(){
 	perfilTronco.push_back(auxTronco);
 	auxTronco.x=0.5;auxTronco.y=0;auxTronco.z=0.0;
 	perfilTronco.push_back(auxTronco);
-	tronco.dibujarCilindroPerfil(perfilTronco,16,10);
+	tronco.dibujarCilindroPerfil(perfilTronco,16,2);
 
 	// Perfil para el cuello
 	vector<_vertex3f> perfilCuello;
@@ -653,7 +503,7 @@ _cuerpo::_cuerpo(){
 	perfilCuello.push_back(auxCuello);
 	auxCuello.x=0.2;auxCuello.y=0;auxCuello.z=0.0;
 	perfilCuello.push_back(auxCuello);
-	cuello.dibujarCilindroPerfil(perfilCuello,16,10);
+	cuello.dibujarCilindroPerfil(perfilCuello,16,2);
 }
 
 void _cuerpo::draw(_modo modo, float r1, float g1, float b1, float r2, float g2, float b2, float grosor){
@@ -685,10 +535,10 @@ _brazos::_brazos(){
 	perfilAMB.push_back(auxAMB);
 	auxAMB.x=0.1;auxAMB.y=0.0;auxAMB.z=0.0;
 	perfilAMB.push_back(auxAMB);
-	br1.dibujarCilindroPerfil(perfilAMB,15,10);
-	br2.dibujarCilindroPerfil(perfilAMB,15,10);
-	biceps1.dibujarCilindroPerfil(perfilAMB,15,10);
-	biceps2.dibujarCilindroPerfil(perfilAMB,15,10);
+	br1.dibujarCilindroPerfil(perfilAMB,15,2);
+	br2.dibujarCilindroPerfil(perfilAMB,15,2);
+	biceps1.dibujarCilindroPerfil(perfilAMB,15,2);
+	biceps2.dibujarCilindroPerfil(perfilAMB,15,2);
 
 	// Perfil para los codos, hombros y manos
 	vector<_vertex3f> perfilCHM;
@@ -699,12 +549,12 @@ _brazos::_brazos(){
 			auxCHM.z=0.0;
 			perfilCHM.push_back(auxCHM);
 	}
-	codo1.dibujarEsferaPerfil(perfilCHM, 16, 12, sin(M_PI*0/10-M_PI/2.0)/7);
-	hombro1.dibujarEsferaPerfil(perfilCHM, 16, 12, sin(M_PI*0/10-M_PI/2.0)/7);
-	mano1.dibujarEsferaPerfil(perfilCHM, 16, 12, sin(M_PI*0/10-M_PI/2.0)/7);
-	codo2.dibujarEsferaPerfil(perfilCHM, 16, 12, sin(M_PI*0/10-M_PI/2.0)/7);
-	hombro2.dibujarEsferaPerfil(perfilCHM, 16, 12, sin(M_PI*0/10-M_PI/2.0)/7);
-	mano2.dibujarEsferaPerfil(perfilCHM, 16, 12, sin(M_PI*0/10-M_PI/2.0)/7);
+	codo1.dibujarEsferaPerfil(perfilCHM, 16, 0, sin(M_PI*0/10-M_PI/2.0)/7);
+	hombro1.dibujarEsferaPerfil(perfilCHM, 16, 0, sin(M_PI*0/10-M_PI/2.0)/7);
+	mano1.dibujarEsferaPerfil(perfilCHM, 16, 0, sin(M_PI*0/10-M_PI/2.0)/7);
+	codo2.dibujarEsferaPerfil(perfilCHM, 16, 0, sin(M_PI*0/10-M_PI/2.0)/7);
+	hombro2.dibujarEsferaPerfil(perfilCHM, 16, 0, sin(M_PI*0/10-M_PI/2.0)/7);
+	mano2.dibujarEsferaPerfil(perfilCHM, 16, 0, sin(M_PI*0/10-M_PI/2.0)/7);
 }
 
 void _brazos::brazo1(_modo modo, float r1, float g1, float b1, float r2, float g2, float b2, float grosor){
@@ -716,7 +566,7 @@ void _brazos::brazo1(_modo modo, float r1, float g1, float b1, float r2, float g
 			glRotatef(giroBrazo,1,0,0);
 			br1.draw(modo, r1, g1, b1, r2, g2, b2, grosor);
 			// Mano 1
-			glTranslatef(0.0,0.6,0.0); 
+			glTranslatef(0.0,0.6,0.0);
 			mano1.draw(modo, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, grosor);
 		glPopMatrix();
 
@@ -787,8 +637,8 @@ _varita::_varita(){
 	perfilEV.push_back(auxEV);
 	auxEV.x=0.05;auxEV.y=0.0;auxEV.z=0.0;
 	perfilEV.push_back(auxEV);
-	c1.dibujarCilindroPerfil(perfilEV,6,10);
-	c3.dibujarCilindroPerfil(perfilEV,6,10);
+	c1.dibujarCilindroPerfil(perfilEV,6,2);
+	c3.dibujarCilindroPerfil(perfilEV,6,2);
 
 	// Perfil para el tronco de la varita
 	vector<_vertex3f> perfilVar;
@@ -797,7 +647,7 @@ _varita::_varita(){
 	perfilVar.push_back(auxVar);
 	auxVar.x=0.05;auxVar.y=0.0;auxVar.z=0.0;
 	perfilVar.push_back(auxVar);
-	c2.dibujarCilindroPerfil(perfilVar,6,10);
+	c2.dibujarCilindroPerfil(perfilVar,6,2);
 }
 
 void _varita::draw(_modo modo, float r1, float g1, float b1, float r2, float g2, float b2, float grosor){
@@ -833,11 +683,11 @@ _brillo::_brillo(){
 			auxBrillo.z=0.0;
 			perfilBrillo.push_back(auxBrillo);
 	}
-	e1.dibujarEsferaPerfil(perfilBrillo, 16, 12, sin(M_PI*0/10-M_PI/2.0)/15);
-	e2.dibujarEsferaPerfil(perfilBrillo, 16, 12, sin(M_PI*0/10-M_PI/2.0)/15);
-	e3.dibujarEsferaPerfil(perfilBrillo, 16, 12, sin(M_PI*0/10-M_PI/2.0)/15);
-	e4.dibujarEsferaPerfil(perfilBrillo, 16, 12, sin(M_PI*0/10-M_PI/2.0)/15);
-	e5.dibujarEsferaPerfil(perfilBrillo, 16, 12, sin(M_PI*0/10-M_PI/2.0)/15);
+	e1.dibujarEsferaPerfil(perfilBrillo, 16, 0, sin(M_PI*0/10-M_PI/2.0)/15);
+	e2.dibujarEsferaPerfil(perfilBrillo, 16, 0, sin(M_PI*0/10-M_PI/2.0)/15);
+	e3.dibujarEsferaPerfil(perfilBrillo, 16, 0, sin(M_PI*0/10-M_PI/2.0)/15);
+	e4.dibujarEsferaPerfil(perfilBrillo, 16, 0, sin(M_PI*0/10-M_PI/2.0)/15);
+	e5.dibujarEsferaPerfil(perfilBrillo, 16, 0, sin(M_PI*0/10-M_PI/2.0)/15);
 }
 
 void _brillo::draw(_modo modo, float r1, float g1, float b1, float r2, float g2, float b2, float grosor){
@@ -869,8 +719,8 @@ _piernas::_piernas(){
 	perfilMT.push_back(auxMT);
 	auxMT.x=0.17;auxMT.y=0.0;auxMT.z=0.0;
 	perfilMT.push_back(auxMT);
-	muslo1.dibujarCilindroPerfil(perfilMT,15,10);
-	muslo2.dibujarCilindroPerfil(perfilMT,15,10);
+	muslo1.dibujarCilindroPerfil(perfilMT,15,2);
+	muslo2.dibujarCilindroPerfil(perfilMT,15,2);
 }
 
 void _piernas::draw(_modo modo, float r1, float g1, float b1, float r2, float g2, float b2, float grosor){

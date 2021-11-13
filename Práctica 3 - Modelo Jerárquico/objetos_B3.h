@@ -95,72 +95,6 @@ vector<_vertex3f> perfil;
 int num;
 };
 
-
-//************************************************************************
-// objeto articulado: tanque
-//************************************************************************
-
-class _chasis: public _triangulos3D
-{
-public:
-       _chasis();
-void draw(_modo modo, float r1, float g1, float b1, float r2, float g2, float b2, float grosor);
-
-float altura;
-
-protected:
-_rotacion  rodamiento;
-_cubo  base;
-};
-
-//************************************************************************
-
-class _torreta: public _triangulos3D
-{
-public:
-       _torreta();
-void draw(_modo modo, float r1, float g1, float b1, float r2, float g2, float b2, float grosor);
-
-float altura;
-float anchura;
-
-protected:
-_cubo  base;
-_piramide parte_trasera;
-};
-
-//************************************************************************
-
-class _tubo: public _triangulos3D
-{
-public:
-       _tubo();
-void draw(_modo modo, float r1, float g1, float b1, float r2, float g2, float b2, float grosor);
-
-protected:
-_rotacion tubo_abierto; // caña del cañón
-};
-
-//************************************************************************
-
-class _tanque: public _triangulos3D
-{
-public:
-       _tanque();
-void draw(_modo modo, float r1, float g1, float b1, float r2, float g2, float b2, float grosor);
-
-float giro_tubo;
-float giro_torreta;
-
-float giro_tubo_min;
-float giro_tubo_max;
-
-protected:
-_chasis  chasis;
-_torreta  torreta;
-_tubo     tubo;
-};
-
 /****************************************************************************/
 // Práctica 2
 /****************************************************************************/
@@ -185,6 +119,7 @@ public:
 /****************************************************************************/
 // Práctica 3
 /****************************************************************************/
+
 // Clase _chistera
 class _chistera: public _triangulos3D{
 public:

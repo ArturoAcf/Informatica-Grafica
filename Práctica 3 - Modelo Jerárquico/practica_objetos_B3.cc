@@ -13,7 +13,7 @@ using namespace std;
 
 // tipos
 typedef enum{CUBO, PIRAMIDE, OBJETO_PLY, ROTACION,
-						 ARTICULADO, CILINDRO /*Práctica 2*/,
+						 CILINDRO /*Práctica 2*/,
 						 ESFERA, /*Práctica 2,*/ MAGO /*Práctica 3*/} _tipo_objeto;
 _tipo_objeto t_objeto=CUBO;
 _modo   modo=POINTS;
@@ -35,7 +35,6 @@ _cubo cubo;
 _piramide piramide(0.85,1.3);
 _objeto_ply  ply;
 _rotacion rotacion;
-_tanque tanque;
 
 // Práctica 2
 _cilindro cilindro;
@@ -43,7 +42,7 @@ _esfera esfera;
 
 // Práctica 3
 _mago mago;
-int mov=0;
+int mov=0; // Para la animación
 
 // _objeto_ply *ply1;
 
@@ -125,7 +124,6 @@ switch (t_objeto){
 	case PIRAMIDE: piramide.draw(modo,1.0,0.0,0.0,0.0,1.0,0.0,2);break;
         case OBJETO_PLY: ply.draw(modo,1.0,0.6,0.0,0.0,1.0,0.3,2);break;
         case ROTACION: rotacion.draw(modo,1.0,0.0,0.0,0.0,1.0,0.0,2);break;
-        case ARTICULADO: tanque.draw(modo,0.5,0.7,0.2,0.3,0.6,0.3,2);break;
 				case CILINDRO: cilindro.draw(modo,1.0,0.0,0.0,0.0,1.0,0.0,2);break; // Práctica 2
 				case ESFERA: esfera.draw(modo,1.0,0.0,0.0,0.0,1.0,0.0,2);break; // Práctica 2
 				case MAGO: mago.draw(modo,0.0,0.0,0.0,1.0,1.0,1.0,2);break; // Práctica 3
@@ -191,7 +189,6 @@ switch (toupper(Tecla1)){
         case 'C':t_objeto=CUBO;break;
         case 'O':t_objeto=OBJETO_PLY;break;
         case 'R':t_objeto=ROTACION;break;
-        case 'A':t_objeto=ARTICULADO;break;
 				case 'I':t_objeto=CILINDRO;break; // Práctica 2
 				case 'E':t_objeto=ESFERA;break; // Práctica 2
 				// case 'H':t_objeto=CHISTERA;break; // Práctica 3
@@ -351,10 +348,10 @@ rotacion.parametros(perfil2,6,1,0);
 /****************************************************************************/
 
 // Cilindro
-cilindro.dibujarCilindro(10);
+cilindro.dibujarCilindro(2);
 
 // Esfera
-esfera.dibujarEsfera(12);
+esfera.dibujarEsfera(0);
 
 /****************************************************************************/
 // Práctica 3
