@@ -805,7 +805,7 @@ void _mago::draw(_modo modo, float r1, float g1, float b1, float r2, float g2, f
 
 		// Piernas
 		glPushMatrix();
-			piernas.draw(modo, r1, g1, b1, r2, g2, b2, grosor); // Gold
+			piernas.draw(modo, r1, g1, b1, r2, g2, b2, grosor);
 		glPopMatrix();
 	glPopMatrix();
 }
