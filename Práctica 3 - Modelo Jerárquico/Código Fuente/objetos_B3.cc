@@ -343,6 +343,11 @@ caras.resize(2*(num_aux-1)*num);
 				cara_aux._2=(i+perfil.size()-1)%(vertices.size()-1); // (i+perfil.size())%(vertices.size()-1)
 				caras.push_back(cara_aux);
 			}
+
+			// Cara restante
+			cara_aux._0=perfil.size()-1+perfil.size()*(num-1);
+			cara_aux._1=perfil.size()-1;
+			cara_aux._2=vertices.size()-1;
 		}
 	}else{ // Caso sin tapas
 		// Nada
@@ -805,7 +810,7 @@ void _mago::draw(_modo modo, float r1, float g1, float b1, float r2, float g2, f
 
 		// Piernas
 		glPushMatrix();
-			piernas.draw(modo, r1, g1, b1, r2, g2, b2, grosor);
+			piernas.draw(modo, r1, g1, b1, r2, g2, b2, grosor); // Gold
 		glPopMatrix();
 	glPopMatrix();
 }
