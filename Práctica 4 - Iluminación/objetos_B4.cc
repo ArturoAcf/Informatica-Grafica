@@ -129,7 +129,7 @@ void _triangulos3D::draw(_modo modo, float r1, float g1, float b1, float r2, flo
 		case EDGES:draw_aristas(r1, g1, b1, grosor);break;
 		case SOLID_CHESS:draw_solido_ajedrez(r1, g1, b1, r2, g2, b2);break;
 		case SOLID:draw_solido(r1, g1, b1);break;
-		case SOLID_ILLUMINATED_FLAT:draw_iluminacion_plana( );break; // Pŕactiac 4
+		case SOLID_ILLUMINATED_FLAT:draw_iluminacion_plana();break; // Pŕactiac 4
 		case SOLID_ILLUMINATED_GOURAUD:draw_iluminacion_suave();break; // Práctica 4
 	}
 }
