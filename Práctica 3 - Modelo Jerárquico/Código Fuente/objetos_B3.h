@@ -168,7 +168,7 @@ public:
   _brazos();
   void brazo1(_modo modo, float r1, float g1, float b1, float r2, float g2, float b2, float grosor);
   void brazo2(_modo modo, float r1, float g1, float b1, float r2, float g2, float b2, float grosor);
-  float giroBrazo,  giroBMin, giroBMax;
+  float giroBrazo, giroBMin, giroBMax;
 
 protected:
   _cilindro br1, br2, biceps1, biceps2;
